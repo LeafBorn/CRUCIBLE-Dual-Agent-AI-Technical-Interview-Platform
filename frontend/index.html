@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUCIBLE - Home Workspace</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Background Hand-Drawn Doodles & Stickers -->
+  <div class="bg-doodles-container">
+    <div class="doodle-text doodle-discipline">DISCIPLINE<br>BUILDS<br>FREEDOM</div>
+    <div class="doodle-text doodle-same-brain">SAME<br>BRAIN<br>DIFFERENT<br>LEVEL</div>
+    <svg class="doodle-symbol doodle-crown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path>
+    </svg>
+    <svg class="doodle-symbol doodle-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
+  </div>
+
+  <!-- Top Floating Navigation Bar (Mockup Style) -->
+  <header class="navbar-wrapper">
+    <nav class="navbar-pill">
+      <div class="nav-left-group">
+        <!-- Official Logo -->
+        <a href="/" class="nav-logo-link" title="CRUCIBLE Home">
+          <img src="/static/assets/logo.png" alt="CRUCIBLE Logo" class="nav-flame-logo">
+        </a>
+
+        <!-- Navigation Icons Menu -->
+        <ul class="nav-icons-menu">
+          <li>
+            <a href="/" class="nav-icon-btn active" title="Home">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="/profile" class="nav-icon-btn" title="Candidate Profile">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+                <polyline points="7 10 11 13 17 7"></polyline>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="/prep" class="nav-icon-btn" title="Preparation Documents">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                <line x1="9" y1="12" x2="15" y2="12"></line>
+                <line x1="9" y1="16" x2="13" y2="16"></line>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right User Badge & Sign Out -->
+      <div class="d-flex align-center gap-2">
+        <div class="nav-user-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span id="navUsername">User</span>
+        </div>
+        <button class="nav-logout-btn" onclick="API.logout()" title="Sign Out">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main-wrapper">
+    <!-- Header Title with Red Doodles -->
+    <div class="page-title-banner" style="text-align: center; margin-bottom: 2rem;">
+      <h1 class="headline-with-rays" style="justify-content: center;">
+        Face the interview before it faces you.
+        <span class="headline-rays">&#9733;</span>
+      </h1>
+      <p class="page-subtitle-text">
+        Upload your resume, optionally provide a job description, and start your live interview session in the dedicated interview room.
+      </p>
+    </div>
+
+    <!-- Alert Area -->
+    <div id="homeAlert" class="alert alert-danger d-none"></div>
+
+    <!-- Clean Progressive Flow Layout -->
+    <div class="home-flow-layout">
+      
+      <!-- 1. Upload your Resume (Pink Card) -->
+      <div class="brutal-card brutal-card-pink">
+        <div class="card-inner-pad">
+          <div class="card-headline-bar">
+            <div class="card-title-icon">
+              <svg style="width: 22px; height: 22px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              <span>1. Upload your Resume</span>
+            </div>
+          </div>
+
+          <div class="upload-drop-dashed" id="dropZone" onclick="document.getElementById('resumeFileInput').click()">
+            <input type="file" id="resumeFileInput" accept=".pdf,.docx" style="display: none;" onchange="handleFileSelect(event)">
+            <svg class="upload-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <div class="upload-text" style="font-weight: 700; font-size: 0.95rem; color: var(--border-dark);">
+              Click to upload or drag and drop your resume
+            </div>
+            <div style="font-size: 0.8rem; font-weight: 600; color: #6b7280; margin-top: 0.25rem;">
+              Supported formats: PDF, DOCX
+            </div>
+          </div>
+
+          <!-- Upload File Status Badge -->
+          <div id="uploadStatus" class="d-none" style="margin-top: 0.85rem; background: #ffffff; border: var(--border-w) solid var(--border-dark); border-radius: var(--radius-sm); padding: 0.55rem 0.95rem; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 0.85rem; box-shadow: var(--shadow-hard-sm);">
+            <div>
+              <span id="loadedFileName">resume.pdf</span>
+              <span id="loadedFilePages" style="color: #6b7280; margin-left: 0.5rem;"></span>
+            </div>
+            <span style="color: #166534; font-weight: 800;">Ready &#10003;</span>
+          </div>
+
+          <!-- Resume Skills Action Row -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.85rem; flex-wrap: gap; gap: 0.5rem;">
+            <div style="font-size: 0.825rem; font-weight: 600; color: #4b5563;">
+              View or refresh skills extracted from resume:
+            </div>
+            <button type="button" class="btn-brutal-white" onclick="extractOrShowResumeSkills()" id="btnResumeSkills" title="Extract or view skills from your resume">
+              <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+              </svg>
+              <span>Resume Skills</span>
+              <span id="skillsCountBadge" class="pill-tag pill-tag-matched d-none" style="padding: 0.1rem 0.5rem; font-size: 0.75rem; margin-left: 0.3rem;">0</span>
+            </button>
+          </div>
+
+          <!-- Detected Resume Skills (Appears after upload or clicking Resume Skills) -->
+          <div id="skillsDetectedBlock" class="d-none" style="margin-top: 1.15rem; background: #ffffff; border: var(--border-w) solid var(--border-dark); border-radius: var(--radius-md); padding: 1.15rem; box-shadow: var(--shadow-hard-sm);">
+            <div style="font-weight: 800; font-size: 0.95rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; color: var(--border-dark);">
+              <svg style="width: 20px; height: 20px; color: #166534;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Detected Resume Skills:</span>
+            </div>
+            <div id="resumeSkillsTags" class="d-flex" style="flex-wrap: wrap; gap: 0.5rem;"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2. Paste Job Description (Yellow Card) -->
+      <div class="brutal-card brutal-card-yellow">
+        <div class="card-inner-pad">
+          <div class="card-headline-bar">
+            <div class="card-title-icon">
+              <svg style="width: 22px; height: 22px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </svg>
+              <span>2. Job Description & Target Role (Optional)</span>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; font-weight: 800; font-size: 0.85rem; margin-bottom: 0.4rem; color: var(--border-dark);" for="targetRoleInput">
+              Target Role / Position
+            </label>
+            <input type="text" id="targetRoleInput" class="form-input-brutal" placeholder="e.g. Gen AI Engineer, Full Stack Developer, Data Scientist">
+          </div>
+
+          <div style="margin-bottom: 0.75rem;">
+            <label style="display: block; font-weight: 800; font-size: 0.85rem; margin-bottom: 0.4rem; color: var(--border-dark);" for="jdInput">
+              Paste Job Description (or leave empty to skip)
+            </label>
+            <textarea id="jdInput" class="form-input-brutal" rows="4" placeholder="Paste the job description here to analyze skill matching and generate role-specific interview questions..." style="resize: vertical;"></textarea>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; margin-top: 0.85rem;">
+            <button type="button" class="btn-brutal-white" onclick="matchSkillsWithJD()">
+              <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <span>Analyze Skill Match</span>
+            </button>
+          </div>
+
+          <!-- Analysis Result Block (Appears after clicking Analyze Skill Match) -->
+          <div id="skillMatchResults" class="d-none" style="margin-top: 1.15rem; background: #ffffff; border: var(--border-w) solid var(--border-dark); border-radius: var(--radius-md); padding: 1.25rem; box-shadow: var(--shadow-hard-sm);">
+            
+            <div class="donut-score-container" style="margin-bottom: 1rem;">
+              <div class="donut-chart" id="donutScoreVisual">
+                <span class="donut-score-val" id="matchScoreVal">0%</span>
+              </div>
+              <div>
+                <div style="font-weight: 800; font-size: 1rem; color: var(--border-dark);">Role Match Score</div>
+                <div style="font-size: 0.8rem; color: #6b7280; font-weight: 500; line-height: 1.35; margin-top: 0.15rem;">
+                  Calculated based on required skills found in your resume compared to the job description.
+                </div>
+              </div>
+            </div>
+
+            <!-- Matching Skills Preview -->
+            <div id="matchingSkillsBox" style="margin-top: 0.85rem;">
+              <div style="font-size: 0.825rem; font-weight: 800; color: var(--border-dark); margin-bottom: 0.4rem;">
+                Matching Skills:
+              </div>
+              <div id="matchingSkillsTags" class="d-flex" style="flex-wrap: wrap; gap: 0.4rem;">
+                <span class="pill-tag pill-tag-matched">None</span>
+              </div>
+            </div>
+
+            <!-- Missing Skills Preview -->
+            <div style="margin-top: 0.85rem;">
+              <div style="font-size: 0.825rem; font-weight: 800; color: var(--border-dark); margin-bottom: 0.4rem;">
+                Missing Skills (Areas for preparation):
+              </div>
+              <div id="missingSkillsTags" class="d-flex" style="flex-wrap: wrap; gap: 0.4rem;">
+                <span class="pill-tag pill-tag-missing">None detected</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 3. Giant Red Action Button: Enter CRUCIBLE -->
+      <button id="startInterviewBtn" class="btn-brutal-red" onclick="launchInterviewRoom()" style="width: 100%; padding: 1.25rem 1.5rem; font-size: 1.35rem; justify-content: center; border-radius: var(--radius-lg);">
+        <svg style="width: 26px; height: 26px; fill: currentColor;" viewBox="0 0 24 24">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        <span>Enter CRUCIBLE</span>
+      </button>
+
+    </div>
+  </main>
+
+  <script src="/static/js/api.js?v=7"></script>
+  <script src="/static/js/app.js?v=7"></script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUCIBLE - Sign In</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Background Hand-Drawn Doodles & Stickers -->
+  <div class="bg-doodles-container">
+    <div class="doodle-text doodle-good-questions">GOOD<br>QUESTIONS<br>BETTER<br>YOU</div>
+    <div class="doodle-text doodle-same-brain">SAME<br>BRAIN<br>DIFFERENT<br>LEVEL</div>
+    <div class="doodle-text doodle-discipline">DISCIPLINE<br>BUILDS<br>FREEDOM</div>
+    <div class="doodle-text doodle-you-got-this">YOU<br>GOT<br>THIS ☺</div>
+    
+    <!-- Decorative Crown, Star, Lightning Bolt SVG doodles -->
+    <svg class="doodle-symbol doodle-crown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path>
+    </svg>
+    <svg class="doodle-symbol doodle-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
+    <svg class="doodle-symbol doodle-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+    </svg>
+  </div>
+
+  <div class="login-screen-wrap">
+    <div class="login-brutal-card">
+      
+      <!-- Official CRUCIBLE Flame Skull Logo -->
+      <img src="/static/assets/logo.png" alt="CRUCIBLE Logo" class="login-flame-logo">
+
+      <h1 class="login-brand-title">CRUCIBLE</h1>
+      <p class="login-brand-tagline">SIGN IN TO ACCESS YOUR INTERVIEW WORKSPACE</p>
+
+      <!-- Sign In / Register Tabs -->
+      <div class="login-tabs-bar">
+        <div id="tabLogin" class="login-tab-item active" onclick="switchAuthTab('login')">Sign In</div>
+        <div id="tabRegister" class="login-tab-item" onclick="switchAuthTab('register')">Register</div>
+      </div>
+
+      <!-- Alert Notification -->
+      <div id="authAlert" class="alert alert-danger d-none"></div>
+
+      <form id="authForm" onsubmit="handleAuth(event)">
+        <!-- Username Input -->
+        <div class="form-group" style="margin-bottom: 1.15rem;">
+          <label style="display: block; font-weight: 800; font-size: 0.9rem; margin-bottom: 0.4rem;" for="username">Username</label>
+          <div class="input-with-icon">
+            <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <input type="text" id="username" class="form-input-brutal" placeholder="Enter your username" required autofocus autocomplete="username">
+          </div>
+        </div>
+
+        <!-- Password Input -->
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label style="display: block; font-weight: 800; font-size: 0.9rem; margin-bottom: 0.4rem;" for="password">Password</label>
+          <div class="input-with-icon">
+            <svg class="input-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <input type="password" id="password" class="form-input-brutal" placeholder="Enter your password" required autocomplete="current-password">
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="authSubmitBtn" class="btn-brutal-red" style="width: 100%;">
+          SIGN IN &nbsp; &rarr;
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script>
+    let mode = 'login';
+
+    function switchAuthTab(newMode) {
+      mode = newMode;
+      document.getElementById('tabLogin').classList.toggle('active', mode === 'login');
+      document.getElementById('tabRegister').classList.toggle('active', mode === 'register');
+      document.getElementById('authSubmitBtn').innerHTML = mode === 'login' ? 'SIGN IN &nbsp; &rarr;' : 'CREATE ACCOUNT &nbsp; &rarr;';
+      hideAlert();
+    }
+
+    function showAlert(msg, isSuccess = false) {
+      const alert = document.getElementById('authAlert');
+      alert.textContent = msg;
+      alert.className = `alert ${isSuccess ? 'alert-success' : 'alert-danger'}`;
+      alert.classList.remove('d-none');
+    }
+
+    function hideAlert() {
+      document.getElementById('authAlert').classList.add('d-none');
+    }
+
+    async function handleAuth(e) {
+      e.preventDefault();
+      hideAlert();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('authSubmitBtn');
+
+      if (!username || !password) {
+        showAlert("Please fill in both username and password.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Processing...";
+
+      try {
+        const endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/register';
+        const res = await API.post(endpoint, { username, password });
+        if (res && res.token) {
+          API.setAuth(res.token, res.username);
+          window.location.href = "/";
+        }
+      } catch (err) {
+        showAlert(err.message || "Authentication failed. Please check your credentials.");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = mode === 'login' ? 'SIGN IN &nbsp; &rarr;' : 'CREATE ACCOUNT &nbsp; &rarr;';
+      }
+    }
+  </script>
+</body>
+</html>
