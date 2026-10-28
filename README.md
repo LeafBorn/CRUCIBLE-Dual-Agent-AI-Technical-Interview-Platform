@@ -491,5 +491,5 @@ The test validates 10 core criteria:
 ---
 
 <p align="center">
-  Built with ❤️ for every aspiring engineer preparing to conquer their dream technical interview.
+  Built with ❤️ for every aspiring engineer preparing to conquer their dream  technical interview for their dream jobs.
 </p>
